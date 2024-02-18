@@ -2,11 +2,16 @@
 
 import SwiftUI
 
+enum Currency: String, Codable, CaseIterable { // for fun and practice protocols
+    case RUB, EUR, USD, GBP
+}
+
 struct ExpenseItem: Identifiable, Codable {
     var id = UUID()
     let name: String
     let type: String
     let amount: Double
+    let currency: Currency
 }
 
 @Observable
@@ -49,7 +54,8 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        Text(item.amount, format: .currency(code: "USD"))
+                        Text(item.amount, format: .currency(code: item.currency.rawValue))
+                            .foregroundStyle(selectColor(amount: item.amount))
                     }
                 }
                 .onDelete(perform: removeItems)
@@ -68,6 +74,17 @@ struct ContentView: View {
     
     func removeItems(at offsets: IndexSet) {
         expenses.items.remove(atOffsets: offsets)
+    }
+    
+    func selectColor(amount: Double) -> Color {
+        switch amount {
+        case 10..<100:
+                .blue
+        case 100...:
+                .red
+        default:
+                .black
+        }
     }
 }
 
