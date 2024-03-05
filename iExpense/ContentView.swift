@@ -8,7 +8,7 @@ enum Currency: String, Codable, CaseIterable { // for fun and practice protocols
 
 struct ExpenseItem: Identifiable, Codable {
     var id = UUID()
-    let name: String
+    let title: String
     let type: String
     let amount: Double
     let currency: Currency
@@ -48,7 +48,7 @@ struct ContentView: View {
                     ForEach(expenses.items.filter { $0.type == "Personal"} ) { item in
                         HStack {
                             VStack(alignment: .leading) {
-                                Text(item.name)
+                                Text(item.title)
                                     .font(.headline)
                             }
                             
@@ -65,7 +65,7 @@ struct ContentView: View {
                     ForEach(expenses.items.filter { $0.type == "Business"} ) { item in
                         HStack {
                             VStack(alignment: .leading) {
-                                Text(item.name)
+                                Text(item.title)
                                     .font(.headline)
                             }
                             
